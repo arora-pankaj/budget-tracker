@@ -1,21 +1,21 @@
-import { UserProps } from '@/lib/api/user';
-import { getGradient } from '@/lib/gradients';
+import {UserProps} from '@/lib/api/user';
+import {getGradient} from '@/lib/gradients';
 import {
-  CheckInCircleIcon,
   CheckIcon,
+  CheckInCircleIcon,
   EditIcon,
   GitHubIcon,
   LoadingDots,
   UploadIcon,
   XIcon
 } from '@/components/icons';
-import { useSession } from 'next-auth/react';
+import {useSession} from 'next-auth/react';
 import BlurImage from '../blur-image';
-import { useCallback, useEffect, useState } from 'react';
+import {useCallback, useEffect, useState} from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import {useRouter} from 'next/router';
 import TextareaAutosize from 'react-textarea-autosize';
-import { MDXRemote } from 'next-mdx-remote';
+import {MDXRemote} from 'next-mdx-remote';
 
 export const profileWidth = 'max-w-5xl mx-auto px-4 sm:px-6 lg:px-8';
 
@@ -230,23 +230,20 @@ export default function Profile({
               <CheckIcon className="h-4 w-4 text-white" />
             )}
           </button>
-          <Link href={`/${user.username}`} shallow replace scroll={false}>
-            <a className="rounded-full border border-gray-800 hover:border-white w-12 h-12 flex justify-center items-center transition-all">
-              <XIcon className="h-4 w-4 text-white" />
-            </a>
+          <Link href={`/${user.username}`} shallow replace scroll={false} className="rounded-full border border-gray-800 hover:border-white w-12 h-12 flex justify-center items-center transition-all">
+            <XIcon className="h-4 w-4 text-white" />
           </Link>
         </div>
-      ) : session?.username === user.username ? (
+      ) : session?.user?.name === user.username ? (
         <Link
           href={{ query: { settings: true } }}
           as="/settings"
           shallow
           replace
           scroll={false}
+          className="fixed bottom-10 right-10 rounded-full border bg-black border-gray-800 hover:border-white w-12 h-12 flex justify-center items-center transition-all"
         >
-          <a className="fixed bottom-10 right-10 rounded-full border bg-black border-gray-800 hover:border-white w-12 h-12 flex justify-center items-center transition-all">
-            <EditIcon className="h-4 w-4 text-white" />
-          </a>
+          <EditIcon className="h-4 w-4 text-white" />
         </Link>
       ) : null}
     </div>
