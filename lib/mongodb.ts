@@ -1,4 +1,4 @@
-import { MongoClient } from 'mongodb';
+import {MongoClient} from 'mongodb';
 
 const uri = process.env.MONGODB_URI as string; // your mongodb connection string
 const options = {};
@@ -11,6 +11,7 @@ class Singleton {
   private static _instance: Singleton;
   private client: MongoClient;
   private clientPromise: Promise<MongoClient>;
+
   private constructor() {
     this.client = new MongoClient(uri, options);
     this.clientPromise = this.client.connect();
@@ -28,6 +29,7 @@ class Singleton {
     return this._instance.clientPromise;
   }
 }
+
 const clientPromise = Singleton.instance;
 
 // Export a module-scoped MongoClient promise. By doing this in a

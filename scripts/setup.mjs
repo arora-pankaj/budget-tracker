@@ -1,5 +1,5 @@
-import { MongoClient } from 'mongodb';
-import { faker } from '@faker-js/faker';
+import {MongoClient} from 'mongodb';
+import {faker} from '@faker-js/faker';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -12,9 +12,9 @@ const setup = async () => {
     await client.connect();
 
     const hasData = await client
-      .db('test')
-      .collection('users')
-      .countDocuments();
+    .db('test')
+    .collection('users')
+    .countDocuments();
 
     if (hasData) {
       console.log('Database already exists with data');
@@ -39,9 +39,9 @@ const setup = async () => {
     });
 
     const insert = await client
-      .db('test')
-      .collection('users')
-      .insertMany(records);
+    .db('test')
+    .collection('users')
+    .insertMany(records);
 
     if (insert.acknowledged) {
       console.log('Successfully inserted records');
@@ -61,4 +61,4 @@ try {
   console.warn('Database is not ready yet. Skipping seeding...');
 }
 
-export { setup };
+export {setup};

@@ -1,16 +1,11 @@
-import { GetStaticProps } from 'next';
+import {GetStaticProps} from 'next';
 import Profile from '@/components/profile';
-import {
-  getAllUsers,
-  UserProps,
-  getUserCount,
-  getFirstUser
-} from '@/lib/api/user';
-import { defaultMetaProps } from '@/components/layout/meta';
+import {getAllUsers, getFirstUser, getUserCount, UserProps} from '@/lib/api/user';
+import {defaultMetaProps} from '@/components/layout/meta';
 import clientPromise from '@/lib/mongodb';
 
-export default function Home({ user }: { user: UserProps }) {
-  return <Profile user={user} settings={false} />;
+export default function Home({user}: { user: UserProps }) {
+  return <Profile user={user} settings={false}/>;
 }
 
 export const getStaticProps: GetStaticProps = async () => {

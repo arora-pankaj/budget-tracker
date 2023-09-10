@@ -1,9 +1,10 @@
-import { ParsedUrlQuery } from 'querystring';
-import { GetStaticProps } from 'next';
-import { defaultMetaProps } from '@/components/layout/meta';
-import { getUser, getAllUsers, getUserCount } from '@/lib/api/user';
-export { default } from '.';
+import {ParsedUrlQuery} from 'querystring';
+import {GetStaticProps} from 'next';
+import {defaultMetaProps} from '@/components/layout/meta';
+import {getAllUsers, getUser, getUserCount} from '@/lib/api/user';
 import clientPromise from '@/lib/mongodb';
+
+export {default} from '.';
 
 interface Params extends ParsedUrlQuery {
   username: string;
@@ -22,8 +23,8 @@ export const getStaticPaths = async () => {
   }
 
   const results = await getAllUsers();
-  const paths = results.flatMap(({ users }) =>
-    users.map((user) => ({ params: { username: user.username } }))
+  const paths = results.flatMap(({users}) =>
+      users.map((user) => ({params: {username: user.username}}))
   );
   return {
     paths,
@@ -48,7 +49,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
     }
   }
 
-  const { username } = context.params as Params;
+  const {username} = context.params as Params;
   const user = await getUser(username);
   if (!user) {
     return {

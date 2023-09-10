@@ -1,11 +1,10 @@
-import type { NextApiRequest, NextApiResponse } from 'next';
-import { searchUser, updateUser } from 'lib/api/user';
-import { getSession } from 'next-auth/react';
-import { getMdxSource } from 'lib/api/user';
+import type {NextApiRequest, NextApiResponse} from 'next';
+import {getMdxSource, searchUser, updateUser} from 'lib/api/user';
+import {getSession} from 'next-auth/react';
 
 export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse
+    req: NextApiRequest,
+    res: NextApiResponse
 ) {
   if (req.method === 'GET') {
     try {
@@ -18,8 +17,8 @@ export default async function handler(
       });
     }
   } else if (req.method === 'PUT') {
-    const { username, bio } = req.body;
-    const session = await getSession({ req });
+    const {username, bio} = req.body;
+    const session = await getSession({req});
     if (!session || session.username !== username) {
       return res.status(401).json({
         error: 'Unauthorized'
