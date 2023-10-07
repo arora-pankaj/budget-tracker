@@ -1,53 +1,165 @@
-<script>
-	import Header from './Header.svelte';
-	import './styles.css';
+<script lang="ts">
+  import {page} from "$app/stores"
 </script>
 
-<div class="app">
-	<Header />
-
-	<main>
-		<slot />
-	</main>
-
-	<footer>
-		<p>visit <a href="https://kit.svelte.dev">kit.svelte.dev</a> to learn SvelteKit</p>
-	</footer>
+<div>
+  <header>
+    <div class="signedInStatus">
+      <p class="nojs-show loaded">
+        {#if $page.data.session}
+          {#if $page.data.session.user?.image}
+            <span
+                style="background-image: url('{$page.data.session.user.image}')"
+                class="avatar"
+            />
+          {/if}
+          <span class="signedInText">
+            <small>Signed in as</small><br/>
+            <strong
+            >{$page.data.session.user?.email ??
+            $page.data.session.user?.name}</strong
+            >
+          </span>
+          <a href="/auth/signout" class="button" data-sveltekit-preload-data="off">Sign out</a>
+        {:else}
+          <span class="notSignedInText">You are not signed in</span>
+          <a href="/auth/signin" class="buttonPrimary" data-sveltekit-preload-data="off">Sign in</a>
+        {/if}
+      </p>
+    </div>
+    <nav>
+      <ul class="navItems">
+        <li class="navItem"><a href="/">Home</a></li>
+        <li class="navItem"><a href="/protected/transactions">Transactions</a></li>
+      </ul>
+    </nav>
+  </header>
+  <slot/>
 </div>
 
 <style>
-	.app {
-		display: flex;
-		flex-direction: column;
-		min-height: 100vh;
-	}
+  :global(body) {
+    font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+    "Noto Color Emoji";
+    padding: 0 1rem 1rem 1rem;
+    max-width: 680px;
+    margin: 0 auto;
+    background: #fff;
+    color: #333;
+  }
 
-	main {
-		flex: 1;
-		display: flex;
-		flex-direction: column;
-		padding: 1rem;
-		width: 100%;
-		max-width: 64rem;
-		margin: 0 auto;
-		box-sizing: border-box;
-	}
+  :global(li),
+  :global(p) {
+    line-height: 1.5rem;
+  }
 
-	footer {
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-		align-items: center;
-		padding: 12px;
-	}
+  :global(a) {
+    font-weight: 500;
+  }
 
-	footer a {
-		font-weight: bold;
-	}
+  :global(hr) {
+    border: 1px solid #ddd;
+  }
 
-	@media (min-width: 480px) {
-		footer {
-			padding: 12px 0;
-		}
-	}
+  :global(iframe) {
+    background: #ccc;
+    border: 1px solid #ccc;
+    height: 10rem;
+    width: 100%;
+    border-radius: 0.5rem;
+    filter: invert(1);
+  }
+
+  .nojs-show {
+    opacity: 1;
+    top: 0;
+  }
+
+  .signedInStatus {
+    display: block;
+    min-height: 4rem;
+    width: 100%;
+  }
+
+  .loaded {
+    position: relative;
+    top: 0;
+    opacity: 1;
+    overflow: hidden;
+    border-radius: 0 0 0.6rem 0.6rem;
+    padding: 0.6rem 1rem;
+    margin: 0;
+    background-color: rgba(0, 0, 0, 0.05);
+    transition: all 0.2s ease-in;
+  }
+
+  .signedInText,
+  .notSignedInText {
+    position: absolute;
+    padding-top: 0.8rem;
+    left: 1rem;
+    right: 6.5rem;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: inherit;
+    z-index: 1;
+    line-height: 1.3rem;
+  }
+
+  .signedInText {
+    padding-top: 0;
+    left: 4.6rem;
+  }
+
+  .avatar {
+    border-radius: 2rem;
+    float: left;
+    height: 2.8rem;
+    width: 2.8rem;
+    background-color: white;
+    background-size: cover;
+    background-repeat: no-repeat;
+  }
+
+  .button,
+  .buttonPrimary {
+    float: right;
+    margin-right: -0.4rem;
+    font-weight: 500;
+    border-radius: 0.3rem;
+    cursor: pointer;
+    font-size: 1rem;
+    line-height: 1.4rem;
+    padding: 0.7rem 0.8rem;
+    position: relative;
+    z-index: 10;
+    background-color: transparent;
+    color: #555;
+  }
+
+  .buttonPrimary {
+    background-color: #346df1;
+    border-color: #346df1;
+    color: #fff;
+    text-decoration: none;
+    padding: 0.7rem 1.4rem;
+  }
+
+  .buttonPrimary:hover {
+    box-shadow: inset 0 0 5rem rgba(0, 0, 0, 0.2);
+  }
+
+  .navItems {
+    margin-bottom: 2rem;
+    padding: 0;
+    list-style: none;
+  }
+
+  .navItem {
+    display: inline-block;
+    margin-right: 1rem;
+  }
 </style>

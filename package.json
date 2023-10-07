@@ -13,6 +13,12 @@
 		"test:integration": "playwright test",
 		"test:unit": "vitest"
 	},
+	"dependencies": {
+		"@auth/core": "^0.16.0",
+		"@auth/mongodb-adapter": "^2.0.1",
+		"@auth/sveltekit": "^0.3.8",
+		"mongodb": "^6.1.0"
+	},
 	"devDependencies": {
 		"@fontsource/fira-mono": "^4.5.10",
 		"@neoconfetti/svelte": "^1.0.0",
